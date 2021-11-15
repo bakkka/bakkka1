@@ -1,0 +1,28 @@
+#include <iostream>
+using namespace std;
+ 
+int changeSymbol(char *str)
+{       
+    int size=0;
+      while(*str != '\0')//пока значение ячейки не равно символу конца строки
+      {
+           str++;
+           size++;
+      }
+      return size;
+}
+ 
+int main()
+{
+      setlocale(LC_ALL, "rus");
+    
+      int size;
+    
+     char str[] = {"233"};
+ 
+      size=changeSymbol(str);//передаем исходную строку в функцию
+      cout<<size;
+ 
+      
+return 0;
+}
