@@ -8,6 +8,7 @@
 #include <algorithm>
 using namespace std;
 
+
 COORD coord = { 0,0 };
 void gotoxy(int x, int y)
 {
@@ -74,8 +75,8 @@ void pole(int yc, int xc)
                 cout << " ";
             }
             else {
-                
-                cout << "#";
+                char xxx=(219);
+                cout <<xxx ;
             }
         }
         cout << endl;
@@ -85,6 +86,7 @@ void pole(int yc, int xc)
 
 
 int main() {
+    ShowCursor(FALSE);
     start:
     char koordwall[40][40];
     for (int i = 0; i < 40; i++) {
@@ -117,7 +119,7 @@ int main() {
     char q;
     cout << "enter the dimensions of the field" << endl;
     xc = vvodx();
-    while (xc<=20) {
+    while (xc<=6) {
         cout << "\nretry again, width should be from 20 to 40";
         xc = vvodx();
     }
@@ -128,7 +130,7 @@ int main() {
 
 
     yc = vvody();
-    while (yc <= 15) {
+    while (yc <= 6) {
         cout << "\nretry again, height should be from 20 to 40";
         yc = vvody();
     }
@@ -143,8 +145,11 @@ int main() {
     int kolvo1 = xc - 2;
     int kolvo2 = yc - 2;
     int stena1, stena2;
-    char yabloko(64);
+    char yabloko(253);
     srand(time(NULL));
+    gotoxy(0, yc + 3);
+    cout << "PRESS ENTER TO PUT APPLES AND START THE GAME";
+    q = _getch();
     random1 = rand() % kolvo1 + 1;
     random2 = rand() % kolvo2 + 3;
     gotoxy(random1, random2);
@@ -161,6 +166,81 @@ int main() {
     random8 = rand() % kolvo2 + 3;
     gotoxy(random7, random8);
     cout << yabloko;
+    if (((random1 == 1) && (random2 == 3)) || ((random3 == 1) && (random4 == 3)) || ((random5 == 1) && (random6 == 3))) {
+        if ((random1 == 1) && (random2 == 3)) {
+            random1 = rand() % kolvo1 + 1;
+            random2 = rand() % kolvo2 + 3;
+            gotoxy(random1, random2);
+            cout << yabloko;
+        }
+        else
+            if ((random3 == 1) && (random4 == 3)) {
+                random3 = rand() % kolvo1 + 1;
+                random4 = rand() % kolvo2 + 3;
+                gotoxy(random3, random4);
+                cout << yabloko;
+            }
+            else
+                if ((random5 == 1) && (random6 == 3)) {
+                    random5 = rand() % kolvo1 + 1;
+                    random6 = rand() % kolvo2 + 3;
+                    gotoxy(random5, random6);
+                    cout << yabloko;
+                }
+    }
+    if  ((random7 == 1) && (random8 == 3)) {
+        
+            random7 = rand() % kolvo1 + 1;
+            random8 = rand() % kolvo2 + 3;
+            gotoxy(random7, random8);
+            cout << yabloko;
+       }
+    if (((random1 == random3) && (random2 == random4)) || ((random1 == random5) && (random2 == random6)) || ((random1 == random7) && (random2 == random8))) {
+        if ((random1 == random3) && (random2 == random4)) {
+            random1 = rand() % kolvo1 + 1;
+            random2 = rand() % kolvo2 + 3;
+            gotoxy(random1, random2);
+            cout << yabloko;
+        }
+        else
+            if ((random1 == random5) && (random2 == random6)) {
+                random1 = rand() % kolvo1 + 1;
+                random2 = rand() % kolvo2 + 3;
+                gotoxy(random1, random2);
+                cout << yabloko;
+            }
+            else
+                if ((random1 == random7) && (random2 == random8)) {
+                    random1 = rand() % kolvo1 + 1;
+                    random2 = rand() % kolvo2 + 3;
+                    gotoxy(random1, random2);
+                    cout << yabloko;
+                }
+    }
+    if (((random3 == random5) && (random4 == random6)) || ((random3 == random7) && (random4 == random8)) || ((random5 == random7) && (random6 == random8))) {
+        if ((random3 == random5) && (random4 == random6)) {
+            random3 = rand() % kolvo1 + 1;
+            random4 = rand() % kolvo2 + 3;
+            gotoxy(random3, random4);
+            cout << yabloko;
+        }
+        else
+            if ((random3 == random7) && (random4 == random8)) {
+                random1 = rand() % kolvo1 + 1;
+                random2 = rand() % kolvo2 + 3;
+                gotoxy(random3, random4);
+                cout << yabloko;
+            }
+            else
+                if ((random5 == random7) && (random6 == random8)) {
+                    random5 = rand() % kolvo1 + 1;
+                    random6 = rand() % kolvo2 + 3;
+                    gotoxy(random5, random6);
+                    cout << yabloko;
+                }
+    }
+    gotoxy(0, yc + 3);
+    cout << "                                                      ";
     gotoxy(xc+2, 3);
     int point = 0;
     int i=0;
@@ -168,7 +248,9 @@ int main() {
     len = 1+point;
     cout << "Amount of points: " << point;
     gotoxy(xc + 2, 4);
-    cout << "Price of wall is 3 points";
+    cout << "EARN 15 POINTS TO WIN";
+    gotoxy(xc + 2, 5);
+    cout << "Press Enter to put a wall";
         
     int predy1;
     int predx1;
@@ -176,7 +258,7 @@ int main() {
     int predy;
     while (exit) {
         gotoxy(vibor_x, vibor_y);
-        char b = (42);
+        char b = (176);
         cout << b;
        
         int k = len;
@@ -218,7 +300,7 @@ int main() {
             if (((vibor_x == random1) && (vibor_y == random2)) || ((vibor_x == random3) && (vibor_y == random4)) ||
                 ((vibor_x == random5) && (vibor_y == random6)) || ((vibor_x == random7) && (vibor_y == random8))) {
                 point += 1;
-                len += 2;
+                len += 1;
                 if ((vibor_x == random1) && (vibor_y == random2)) {
                     random1 = rand() % kolvo1 + 1;
                     random2 = rand() % kolvo2 + 3;
@@ -250,7 +332,50 @@ int main() {
                 cout << "Amount of points: " << point;
                
             }
-
+            if (((random1 == random3) && (random2 == random4)) || ((random1 == random5) && (random2 == random6)) || ((random1 == random7) && (random2 == random8))) {
+                if ((random1 == random3) && (random2 == random4)) {
+                    random1 = rand() % kolvo1 + 1;
+                    random2 = rand() % kolvo2 + 3;
+                    gotoxy(random1, random2);
+                    cout << yabloko;
+                }
+                else
+                    if ((random1 == random5) && (random2 == random6)) {
+                        random1 = rand() % kolvo1 + 1;
+                        random2 = rand() % kolvo2 + 3;
+                        gotoxy(random1, random2);
+                        cout << yabloko;
+                    }
+                    else
+                        if ((random1 == random7) && (random2 == random8)) {
+                            random1 = rand() % kolvo1 + 1;
+                            random2 = rand() % kolvo2 + 3;
+                            gotoxy(random1, random2);
+                            cout << yabloko;
+                        }
+            }
+            if (((random3 == random5) && (random4 == random6)) || ((random3 == random7) && (random4 == random8)) || ((random5 == random7) && (random6 == random8))) {
+                if ((random3 == random5) && (random4 == random6)) {
+                    random3 = rand() % kolvo1 + 1;
+                    random4 = rand() % kolvo2 + 3;
+                    gotoxy(random3, random4);
+                    cout << yabloko;
+                }
+                else
+                    if ((random3 == random7) && (random4 == random8)) {
+                        random1 = rand() % kolvo1 + 1;
+                        random2 = rand() % kolvo2 + 3;
+                        gotoxy(random3, random4);
+                        cout << yabloko;
+                    }
+                    else
+                        if ((random5 == random7) && (random6 == random8)) {
+                            random5 = rand() % kolvo1 + 1;
+                            random6 = rand() % kolvo2 + 3;
+                            gotoxy(random5, random6);
+                            cout << yabloko;
+                        }
+            }
             if (vibor_y == 2) {
                 system("cls");
                 gotoxy(50, 15);
@@ -263,6 +388,40 @@ int main() {
                     goto start;
                 }
                 
+            }
+            for (int k = len; k != 0; k--)
+            {
+                if (((random1 == pastX[k]) && (random2== pastY[k])) || ((random3 == pastX[k]) && (random4 == pastY[k])) ||
+                    ((random5 == pastX[k]) && (random6 == pastY[k])) || ((random7 == pastX[k]) && (random8 == pastY[k]))) {
+                    if ((random1 == pastX[k]) && (random2 == pastY[k])) {
+                        random1 = rand() % kolvo1 + 1;
+                        random2 = rand() % kolvo2 + 3;
+                        gotoxy(random1, random2);
+                        cout << yabloko;
+                    }
+                    else
+                        if ((random3 == pastX[k]) && (random4 == pastY[k])) {
+                            random3 = rand() % kolvo1 + 1;
+                            random4 = rand() % kolvo2 + 3;
+                            gotoxy(random3, random4);
+                            cout << yabloko;
+                        }
+                        else
+                            if ((random5 == pastX[k]) && (random6 == pastY[k])) {
+                                random5 = rand() % kolvo1 + 1;
+                                random6 = rand() % kolvo2 + 3;
+                                gotoxy(random5, random6);
+                                cout << yabloko;
+                            }
+                            else
+                                if ((random7 == pastX[k]) && (random8 == pastY[k])) {
+                                    random7 = rand() % kolvo1 + 1;
+                                    random8 = rand() % kolvo2 + 3;
+                                    gotoxy(random7, random8);
+                                    cout << yabloko;
+                                }
+
+                }
             }
             
         
@@ -325,7 +484,50 @@ int main() {
                 cout << "Amount of points: " << point;
                 
             }
-           
+            if (((random1 == random3) && (random2 == random4)) || ((random1 == random5) && (random2 == random6)) || ((random1 == random7) && (random2 == random8))) {
+                if ((random1 == random3) && (random2 == random4)) {
+                    random1 = rand() % kolvo1 + 1;
+                    random2 = rand() % kolvo2 + 3;
+                    gotoxy(random1, random2);
+                    cout << yabloko;
+                }
+                else
+                    if ((random1 == random5) && (random2 == random6)) {
+                        random1 = rand() % kolvo1 + 1;
+                        random2 = rand() % kolvo2 + 3;
+                        gotoxy(random1, random2);
+                        cout << yabloko;
+                    }
+                    else
+                        if ((random1 == random7) && (random2 == random8)) {
+                            random1 = rand() % kolvo1 + 1;
+                            random2 = rand() % kolvo2 + 3;
+                            gotoxy(random1, random2);
+                            cout << yabloko;
+                        }
+            }
+            if (((random3 == random5) && (random4 == random6)) || ((random3 == random7) && (random4 == random8)) || ((random5 == random7) && (random6 == random8))) {
+                if ((random3 == random5) && (random4 == random6)) {
+                    random3 = rand() % kolvo1 + 1;
+                    random4 = rand() % kolvo2 + 3;
+                    gotoxy(random3, random4);
+                    cout << yabloko;
+                }
+                else
+                    if ((random3 == random7) && (random4 == random8)) {
+                        random1 = rand() % kolvo1 + 1;
+                        random2 = rand() % kolvo2 + 3;
+                        gotoxy(random3, random4);
+                        cout << yabloko;
+                    }
+                    else
+                        if ((random5 == random7) && (random6 == random8)) {
+                            random5 = rand() % kolvo1 + 1;
+                            random6 = rand() % kolvo2 + 3;
+                            gotoxy(random5, random6);
+                            cout << yabloko;
+                        }
+            }
             if (vibor_y == (yc + 1)) {
                 system("cls");
                 gotoxy(50, 15);
@@ -336,6 +538,41 @@ int main() {
                 if (a == 13) {
                     system("cls");
                     goto start;
+                }
+
+            }
+            for (int k = len; k != 0; k--)
+            {
+                if (((random1 == pastX[k]) && (random2 == pastY[k])) || ((random3 == pastX[k]) && (random4 == pastY[k])) ||
+                    ((random5 == pastX[k]) && (random6 == pastY[k])) || ((random7 == pastX[k]) && (random8 == pastY[k]))) {
+                    if ((random1 == pastX[k]) && (random2 == pastY[k])) {
+                        random1 = rand() % kolvo1 + 1;
+                        random2 = rand() % kolvo2 + 3;
+                        gotoxy(random1, random2);
+                        cout << yabloko;
+                    }
+                    else
+                        if ((random3 == pastX[k]) && (random4 == pastY[k])) {
+                            random3 = rand() % kolvo1 + 1;
+                            random4 = rand() % kolvo2 + 3;
+                            gotoxy(random3, random4);
+                            cout << yabloko;
+                        }
+                        else
+                            if ((random5 == pastX[k]) && (random6 == pastY[k])) {
+                                random5 = rand() % kolvo1 + 1;
+                                random6 = rand() % kolvo2 + 3;
+                                gotoxy(random5, random6);
+                                cout << yabloko;
+                            }
+                            else
+                                if ((random7 == pastX[k]) && (random8 == pastY[k])) {
+                                    random7 = rand() % kolvo1 + 1;
+                                    random8 = rand() % kolvo2 + 3;
+                                    gotoxy(random7, random8);
+                                    cout << yabloko;
+                                }
+
                 }
             }
             break;
@@ -400,7 +637,50 @@ int main() {
                 
 
             }
-           
+            if (((random1 == random3) && (random2 == random4)) || ((random1 == random5) && (random2 == random6)) || ((random1 == random7) && (random2 == random8))) {
+                if ((random1 == random3) && (random2 == random4)) {
+                    random1 = rand() % kolvo1 + 1;
+                    random2 = rand() % kolvo2 + 3;
+                    gotoxy(random1, random2);
+                    cout << yabloko;
+                }
+                else
+                    if ((random1 == random5) && (random2 == random6)) {
+                        random1 = rand() % kolvo1 + 1;
+                        random2 = rand() % kolvo2 + 3;
+                        gotoxy(random1, random2);
+                        cout << yabloko;
+                    }
+                    else
+                        if ((random1 == random7) && (random2 == random8)) {
+                            random1 = rand() % kolvo1 + 1;
+                            random2 = rand() % kolvo2 + 3;
+                            gotoxy(random1, random2);
+                            cout << yabloko;
+                        }
+            }
+            if (((random3 == random5) && (random4 == random6)) || ((random3 == random7) && (random4 == random8)) || ((random5 == random7) && (random6 == random8))) {
+                if ((random3 == random5) && (random4 == random6)) {
+                    random3 = rand() % kolvo1 + 1;
+                    random4 = rand() % kolvo2 + 3;
+                    gotoxy(random3, random4);
+                    cout << yabloko;
+                }
+                else
+                    if ((random3 == random7) && (random4 == random8)) {
+                        random1 = rand() % kolvo1 + 1;
+                        random2 = rand() % kolvo2 + 3;
+                        gotoxy(random3, random4);
+                        cout << yabloko;
+                    }
+                    else
+                        if ((random5 == random7) && (random6 == random8)) {
+                            random5 = rand() % kolvo1 + 1;
+                            random6 = rand() % kolvo2 + 3;
+                            gotoxy(random5, random6);
+                            cout << yabloko;
+                        }
+            }
             if (vibor_x == 0) {
                 system("cls");
                 gotoxy(50, 15);
@@ -412,7 +692,75 @@ int main() {
                     system("cls");
                     goto start;
                 }
-                
+            }
+            for (int k = len; k != 0; k--)
+            {
+                if (((random1 == pastX[k]) && (random2 == pastY[k])) || ((random3 == pastX[k]) && (random4 == pastY[k])) ||
+                    ((random5 == pastX[k]) && (random6 == pastY[k])) || ((random7 == pastX[k]) && (random8 == pastY[k]))) {
+                    if ((random1 == pastX[k]) && (random2 == pastY[k])) {
+                        random1 = rand() % kolvo1 + 1;
+                        random2 = rand() % kolvo2 + 3;
+                        gotoxy(random1, random2);
+                        cout << yabloko;
+                    }
+                    else
+                        if ((random3 == pastX[k]) && (random4 == pastY[k])) {
+                            random3 = rand() % kolvo1 + 1;
+                            random4 = rand() % kolvo2 + 3;
+                            gotoxy(random3, random4);
+                            cout << yabloko;
+                        }
+                        else
+                            if ((random5 == pastX[k]) && (random6 == pastY[k])) {
+                                random5 = rand() % kolvo1 + 1;
+                                random6 = rand() % kolvo2 + 3;
+                                gotoxy(random5, random6);
+                                cout << yabloko;
+                            }
+                            else
+                                if ((random7 == pastX[k]) && (random8 == pastY[k])) {
+                                    random7 = rand() % kolvo1 + 1;
+                                    random8 = rand() % kolvo2 + 3;
+                                    gotoxy(random7, random8);
+                                    cout << yabloko;
+                                }
+
+                }
+            }
+            
+            for (int k = len; k != 0; k--)
+            {
+                if (((pastX[k] == random1) && (pastY[k] == random2)) || ((pastX[k] == random3) && (pastY[k] == random4)) ||
+                    ((pastX[k] == random5) && (pastY[k] == random6)) || ((pastX[k] == random7) && (pastY[k] == random8))) {
+                    if ((pastX[k] == random1) && (pastY[k] == random2)) {
+                        random1 = rand() % kolvo1 + 1;
+                        random2 = rand() % kolvo2 + 3;
+                        gotoxy(random1, random2);
+                        cout << yabloko;
+                    }
+                    else
+                        if ((pastX[k] == random3) && (pastY[k] == random4)) {
+                            random3 = rand() % kolvo1 + 1;
+                            random4 = rand() % kolvo2 + 3;
+                            gotoxy(random3, random4);
+                            cout << yabloko;
+                        }
+                        else
+                            if ((pastX[k] == random5) && (pastY[k] == random6)) {
+                                random5 = rand() % kolvo1 + 1;
+                                random6 = rand() % kolvo2 + 3;
+                                gotoxy(random5, random6);
+                                cout << yabloko;
+                            }
+                            else
+                                if ((pastX[k] == random7) && (pastY[k] == random8)) {
+                                    random7 = rand() % kolvo1 + 1;
+                                    random8 = rand() % kolvo2 + 3;
+                                    gotoxy(random7, random8);
+                                    cout << yabloko;
+                                }
+
+                }
             }
             break;
         case 77:vibor_x++;
@@ -473,7 +821,50 @@ int main() {
                 cout << "Amount of points: " << point;
                 
             }
-           
+            if (((random1 == random3) && (random2 == random4)) || ((random1 == random5) && (random2 == random6)) || ((random1 == random7) && (random2 == random8))) {
+                if ((random1 == random3) && (random2 == random4)) {
+                    random1 = rand() % kolvo1 + 1;
+                    random2 = rand() % kolvo2 + 3;
+                    gotoxy(random1, random2);
+                    cout << yabloko;
+                }
+                else
+                    if ((random1 == random5) && (random2 == random6)) {
+                        random1 = rand() % kolvo1 + 1;
+                        random2 = rand() % kolvo2 + 3;
+                        gotoxy(random1, random2);
+                        cout << yabloko;
+                    }
+                    else
+                        if ((random1 == random7) && (random2 == random8)) {
+                            random1 = rand() % kolvo1 + 1;
+                            random2 = rand() % kolvo2 + 3;
+                            gotoxy(random1, random2);
+                            cout << yabloko;
+                        }
+            }
+            if (((random3 == random5) && (random4 == random6)) || ((random3 == random7) && (random4 == random8)) || ((random5 == random7) && (random6 == random8))) {
+                if ((random3 == random5) && (random4 == random6)) {
+                    random3 = rand() % kolvo1 + 1;
+                    random4 = rand() % kolvo2 + 3;
+                    gotoxy(random3, random4);
+                    cout << yabloko;
+                }
+                else
+                    if ((random3 == random7) && (random4 == random8)) {
+                        random1 = rand() % kolvo1 + 1;
+                        random2 = rand() % kolvo2 + 3;
+                        gotoxy(random3, random4);
+                        cout << yabloko;
+                    }
+                    else
+                        if ((random5 == random7) && (random6 == random8)) {
+                            random5 = rand() % kolvo1 + 1;
+                            random6 = rand() % kolvo2 + 3;
+                            gotoxy(random5, random6);
+                            cout << yabloko;
+                        }
+            }
             if (vibor_x == (xc - 1)) {
                 system("cls");
                 gotoxy(50, 15);
@@ -486,8 +877,41 @@ int main() {
                     goto start;
                 }
             }
-            break;
+            for (int k = len; k != 0; k--)
+            {
+                if (((random1 == pastX[k]) && (random2 == pastY[k])) || ((random3 == pastX[k]) && (random4 == pastY[k])) ||
+                    ((random5 == pastX[k]) && (random6 == pastY[k])) || ((random7 == pastX[k]) && (random8 == pastY[k]))) {
+                    if ((random1 == pastX[k]) && (random2 == pastY[k])) {
+                        random1 = rand() % kolvo1 + 1;
+                        random2 = rand() % kolvo2 + 3;
+                        gotoxy(random1, random2);
+                        cout << yabloko;
+                    }
+                    else
+                        if ((random3 == pastX[k]) && (random4 == pastY[k])) {
+                            random3 = rand() % kolvo1 + 1;
+                            random4 = rand() % kolvo2 + 3;
+                            gotoxy(random3, random4);
+                            cout << yabloko;
+                        }
+                        else
+                            if ((random5 == pastX[k]) && (random6 == pastY[k])) {
+                                random5 = rand() % kolvo1 + 1;
+                                random6 = rand() % kolvo2 + 3;
+                                gotoxy(random5, random6);
+                                cout << yabloko;
+                            }
+                            else
+                                if ((random7 == pastX[k]) && (random8 == pastY[k])) {
+                                    random7 = rand() % kolvo1 + 1;
+                                    random8 = rand() % kolvo2 + 3;
+                                    gotoxy(random7, random8);
+                                    cout << yabloko;
+                                }
 
+                }
+            }
+            break;
         case 13:
             
             gotoxy(xc + 2, 6);
@@ -546,8 +970,11 @@ int main() {
                 }
                 break;
             }
-        }
-            if (vibor_x < 1)
+        
+
+            
+            }
+            if (vibor_x < 1) // ПРОВЕРКА НА ГРАНИЦЫ
                 vibor_x = xc - 2;
             if (vibor_x > (xc - 2))
                 vibor_x = 1;
@@ -555,19 +982,54 @@ int main() {
                 vibor_y = yc;
             if (vibor_y > yc)
                 vibor_y = 3;
-
-            if (point >= 1) {
+            
+           
+            if (point >= 1) { //ОТРИСОВКА ХВОСТА
                 for (int k = len; k != 0; k--)
                 {
                     gotoxy(pastX[k], pastY[k]);
-                    cout << "*";
+                    cout << b;
                 }
                     gotoxy(pastX[k + 1], pastY[k + 1]);
                     cout << " ";
                 
+            }
+            for (int k = len; k != 0; k--) // ВРЕЗАНИЕ В СЕБЯ
+            {
+                if ((vibor_x == pastX[k+3]) && (vibor_y == pastY[k+3]) && (point >= 1)) {
+                    system("cls");
+                    gotoxy(50, 15);
+                    cout << "GAME OVER";
+                    gotoxy(1, 20);
+                    cout << "press Enter to play again";
+                    int a = _getch();
+                    if (a == 13) {
+                        system("cls");
+                        goto start;
+                    }
+                }
+            }
+            
+
+            
+            if (point == 15) {
+                system("cls");
+                gotoxy(50, 15);
+                cout << "YOU WON";
+                gotoxy(1, 20);
+                cout << "press Enter to play again";
+                int a = _getch();
+                if (a == 13) {
+                    system("cls");
+                    goto start;
+                }
             }
             }
 
             gotoxy(1, yc + 3);
             system("pause");
             }
+
+        
+
+    
