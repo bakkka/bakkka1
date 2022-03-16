@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <io.h>
@@ -108,8 +109,11 @@ void pole(int yc, int xc)
     cout << "ENTER-ОТКРЫТЬ ПАПКУ" << endl;
     cout << "ESC-ПРОСМОТР ФАЙЛА" << endl;
     cout << "BACKSPACE-ВЕРНУТЬСЯ НАЗАД" << endl;
-    cout << "ВЫБЕРИТЕ ФАЙЛ ДЛЯ СРАВНЕНИЕ И НАЖМИТЕ ПРОБЕЛ";
+    cout << "ВЫБЕРИТЕ ФАЙЛ ДЛЯ СРАВНЕНИЕ И НАЖМИТЕ ПРОБЕЛ" << endl;
+    cout << "ВЫБЕРИТЕ ФАЙЛ ДЛЯ КОПИРОВАНИЯ И НАЖМИТЕ 1" << endl;
+    cout << "НАЖМИТЕ TAB ДЛЯ СОЗДАНИЯ ФАЙЛА В ДАННОЙ ПАПКЕ"; 
     cout << "\n\n";
+    
 }
 int main()
 {
@@ -119,7 +123,6 @@ int main()
     char vibor = 1;
     int x = 1, y = 1;
     int yy = 60, xx = 130;
-    int done;
     int code_simvola;
     Dict* cr = 0;
     const int up = 72;
@@ -129,11 +132,14 @@ int main()
     const int backspace=8;
     const int tab = 9;
     const int space = 32;
+    const int copy = 49;
     int raz = 0;
     int kol = 0;
     int viv =1;
-    string strh;
-    string str;
+    int faz = 0;
+    int pol = 0;
+    string strh,strh3;
+    string str,str3;
     _chdir(katalog);   
     cr = spisok();
     int visota = dlina();
@@ -142,7 +148,8 @@ int main()
     vivod(cr,1);
     int strelka = 55;
     char* papka = new char;
-    
+    char* name = cr->file.name;
+    FILE* filee;
     while (exit) {     
         gotoxy(strelka, vibor);
         if (raz == 0) {
@@ -160,40 +167,45 @@ int main()
             gotoxy(strelka, vibor - 1);
             cout << "   ";
             break;
-        case enter:          
-                raz = 0;
-                system("cls");
-                pole(visota + 2, xx);
-                cr = spisok();
-                vivod(cr, 1);
-                for (int a = 0; a < vibor - 1; a++) {
-                    cr = cr->adr;
-                }
-                _chdir(cr->file.name);
-                visota = dlina();
-                system("cls");
-                pole(visota + 2, xx);              
-                cout << "ОТКРЫТАЯ ПАПКА:"<<cr->file.name;
-                cr = spisok();
-              
-                vivod(cr, 1);
+        case enter:
+            raz = 0;
+            system("cls");
+            pole(visota + 2, xx);
+            cr = spisok();
+            vivod(cr, 1);
+            for (int a = 0; a < vibor - 1; a++) {
+                cr = cr->adr;
+            }
+            _chdir(cr->file.name);
+            visota = dlina();
+            system("cls");
+            pole(visota + 2, xx);
+            cout << "ОТКРЫТАЯ ПАПКА:" << cr->file.name;           
+            /*_chdir("..\\");*/
+            cr = spisok();
+            vivod(cr, 1);
+           /* _chdir(cr->file.name);
+            cr = spisok();
+            vivod(cr, 66);
+            strelka = 115;*/
             break;
         case backspace:
             _chdir("..\\");
             raz = 0;
-            
+
             visota = dlina();
             system("cls");
-            pole(visota+2, xx);
+            pole(visota + 2, xx);
             cr = spisok();
-            vivod(cr,1);          
+            
+            vivod(cr, 1);
             break;
         case esc:
             if (raz == 0) {
                 raz = 1;
                 str = "";
                 system("cls");
-                
+
                 for (int a = 0; a < vibor - 1; a++) {
                     cr = cr->adr;
                 }
@@ -208,90 +220,120 @@ int main()
                     }
 
                     cout << str;
-                  
+
                     _chdir(cr->file.name);
                     fin.close();
                 }
             }
             break;
         case tab:
-            
+        {
             gotoxy(0, visota + 6);
-            cout << "Введите имя папки, которую хотите создать: ";    
+            cout << "Введите имя папки, которую хотите создать: ";
             cin >> papka;
-            _mkdir(papka);
+            strcat(papka, ".txt");
+            FILE* filee = fopen(papka, "w");
+            cout << (filee != NULL ? "File created\n" : "Cannot create file\n");
+            fclose(filee);
             system("cls");
             visota = dlina();
             pole(visota + 2, xx);
             cr = spisok();
             vivod(cr, 1);
+        }
             break;
-        case space:
-            string ch1, ch2, chh1, chh2;
-            ifstream fin1, fin2;
-            bool result = true;
-            ch1 = "";
-            ch2 = "";
+        
+
+        /*case space:
+        {
+            ifstream fin1;
             if (kol == 0) {
-                for (int a = 0; a < vibor - 1; a++) {
-                        cr = cr->adr;
-                }
-                ifstream fin1(cr->file.name,ios::binary);
-                kol++;     
-                visota = dlina();
-                system("cls");
-                pole(visota + 2, xx);
-                cr = spisok();
-                vivod(cr, 1);
-                break;               
-            }
-            else {            
                 for (int a = 0; a < vibor - 1; a++) {
                     cr = cr->adr;
                 }
-                ifstream fin2(cr->file.name,ios::binary);               
-                kol = 0;
+
+                fin1.open(cr->file.name, ios::in | ios::binary);
+                if (fin1.is_open()) {
+                    kol++;
+
+                    visota = dlina();
+                    system("cls");
+                    pole(visota + 2, xx);
+                    cr = spisok();
+                    vivod(cr, 1);
+                    fin1.close();
+                }
+                else {
+                    cout << "Ошибкаааааааааааааааааа";
+                    kol = 0;
+                    break;
+                }
+                break;
             }
-            while (!fin1.eof()) {
-                getline(fin1, chh1);
-                ch1 += chh1;
-                ch1 += ' ';
-                if (!fin1.eof())
-                    ch1 += "\n";
-            }
-            while (!fin2.eof()) {
-                getline(fin2, chh2);
-                ch2 += chh2;
-                ch2 += ' ';
-                if (!fin2.eof())
-                    ch2 += "\n";
-            }
-            if (ch1 != ch2) {
-                 result = false;                       
-                 break;
-            }
-                
-            
-            if (result == true) {
-                system("cls");
-                visota = dlina();
-                pole(visota + 2, xx);
-                cr = spisok();
-                vivod(cr, 1);
-                gotoxy(0, visota + 9);
-                cout << "ОДИНАКОВЫЕ ФАЙЛЫ";
-                
+            ifstream fin2("122.txt", ios::in | ios::binary);
+            kol = 0;
+            if (fin1 && fin2)
+            {
+                char ch1, ch2;
+                bool result = true;
+                while (fin1.get(ch1) && fin2.get(ch2))
+                {
+                    if (ch1 != ch2)
+                    {
+                        result = false;
+                        break;
+                    }
+                }
+                if (result)
+                    cout << "Equal" << endl;
+                else
+                    cout << "Unequal" << endl;
             }
             else {
-                system("cls");
-                visota = dlina();
-                pole(visota + 2, xx);
-                cr = spisok();
-                vivod(cr, 1);
-                gotoxy(0, visota + 9);
-                cout << "РАЗНЫЕ ФАЙЛЫ";
+                cout << "Error opening file!" << endl;
             }
             break;
+        }*/
+
+        case copy: {
+            if (pol == 0) {
+                for (int a = 0; a < vibor - 1; a++) {
+                    cr = cr->adr;
+                }
+                name = cr->file.name;
+                ifstream fin3(cr->file.name);
+                if (fin3.is_open()) {
+                    while (!fin3.eof()) {
+                        getline(fin3, strh3);
+                        str3 += strh3;
+                        str3 += ' ';
+                        if (!fin3.eof())
+                            str3 += "\n";
+                    }
+
+                }
+                gotoxy(0, visota + 10);
+                cout << "ВЫБЕРИТЕ ПАПКУ КУДА ПОМЕСТИТЬ СКОПИРОВАННЫЙ ФАЙО И НАЖМИТЕ 1";
+                pol++;
+                break;
+            }
+            if (pol == 1) {
+                FILE* file = fopen(name, "w");
+                gotoxy(0, visota+11);
+                cout << (file != NULL ? " ФАЙЛ СОЗДАН\n" : "Cannot create file\n");
+                char* chap=new char;
+                strcpy(chap, str3.c_str());
+                bool ressult = fputs(chap, file);
+                if (!ressult) {
+                    cout << "Строка в файл успешно записана!";
+                }
+                pol= 0;
+                fclose(file);
+            }
+        }
+            break;
+       
+       
         }
         if (vibor < 1)
             vibor = visota ;
