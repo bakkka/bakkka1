@@ -21,27 +21,36 @@ int level = 0;
 
 // ВИДЫ ФИГУР
 int tetramino[7][4] =
-{
-	1,3,5,7, 
+{ 
 	2,4,5,7, 
+	2,3,4,5,
 	3,5,4,6, 
+	1,3,5,7,
 	3,5,4,7, 
 	2,3,5,7, 
-	3,5,7,6, 
-	2,3,4,5, 
+	3,5,7,6,
 };
 
-struct Point
+struct Coordinate
 {
 	int x, y;
-} coordinate[4], coordinatePrev[4];
+};
+Coordinate coordinate[4], coordinatePrev[4];
 
 // ПРОВЕРКА НА ГРАНИЦЫ
+
 bool check()
 {
 	for (int i = 0; i < 4; i++)
-		if (coordinate[i].x < 1 || coordinate[i].x >= WIDTH || coordinate[i].y >= HEIGHT+1) return 0;
-		else if (pole[coordinate[i].y][coordinate[i].x]) return 0;
+		if (coordinate[i].x < 1 || coordinate[i].x >= WIDTH || coordinate[i].y >= HEIGHT + 1)
+		{
+			return 0;
+		}
+		else 
+			if (pole[coordinate[i].y][coordinate[i].x])
+			{
+				return 0;
+			}
 
 	return 1;
 
@@ -51,7 +60,7 @@ bool check()
 int main()
 {	
 	bool game = true;
-	bool timercontinue = true;
+	bool timerContinue = true;
 
 	string strh,strh2;
 	string str = "";
@@ -90,7 +99,6 @@ int main()
 	Text text1("", font, 70);
 	text1.setColor(Color::Red);
 	
-
 	srand(time(0));
 
 	RenderWindow window(VideoMode(500, 720), "GAME");
@@ -100,15 +108,15 @@ int main()
 	texture.loadFromFile("tiles.png");
 	texture_button.loadFromFile("button.png");
 
-	Sprite cub(texture),sprite_button(texture_button);
-
 	// СПРАЙТЫ
+	Sprite cub(texture), sprite_button(texture_button);
 	cub.setTextureRect(IntRect(0, 0, 18, 18));
 	sprite_button.setTextureRect(IntRect(33, 19, 82, 30));
 
-	// ГОРИЗОНТАЛЬНОЕ ПЕРЕМЕЩЕНИЕ
+	// ПЕРЕМЕННЫЕ ДВИЖЕНИЯ
 	int dx = 0; bool rotate = 0; int color = 1; bool startGame = true; int n = rand() % 7;
 
+	//ПЕРЕМЕННЫЕ ВРЕМЕНИ
 	float timer = 0, timeForMove = 0.3;
 	int timee2 = 0;
 	int gameTimer = 0;
@@ -122,41 +130,53 @@ int main()
 		
 			// ПОЛУЧАЕМ ПРОШЕДШЕЕ ВРЕМЯ
 			float timee = clock.getElapsedTime().asSeconds();
-			if (timercontinue) {
+			if (timerContinue) {
 				timee2 = gameClock.getElapsedTime().asSeconds();
 			}
 			clock.restart();
 			timer += timee;
+
 			
-			Vector2i pixelPos = Mouse::getPosition(window);//забираем коорд курсора
+			Vector2i pixelPos = Mouse::getPosition(window);//КООРДИНАТЫ КУРСОРА МЫШИ
 
 			Event event;
 			while (window.pollEvent(event))
 			{
 				
 				if (event.type == Event::Closed)
-					
-
+				{
 					window.close();
+				}
 
 				// Была нажата кнопка на клавиатуре?
 				if (event.type == Event::KeyPressed) {
 					
-					if (event.key.code == Keyboard::Up) rotate = true;
+					if (event.key.code == Keyboard::Up)
+					{
+						rotate = true;
+					}
 					
-					else if (event.key.code == Keyboard::Left) dx = -1;
+					else
+						if (event.key.code == Keyboard::Left)
+						{
+							dx = -1;
+						}
 					
-					else if (event.key.code == Keyboard::Right) dx = 1;
+						else
+							if (event.key.code == Keyboard::Right)
+							{
+								dx = 1;
+							}
 				}
 				if (event.type == Event::MouseButtonPressed) {
-					if (event.key.code == Mouse::Left)
+					if (event.key.code == Mouse::Left){
 						if (sprite_button.getGlobalBounds().contains(pixelPos.x, pixelPos.y)) {
 							std::cout << "Restart\n";
 							window.close();
 							system("C:\\Users\\artem\\source\\repos\\kursach_2.0\\x64\\Debug\\kursach_2.0.exe");
 
-								
 						}
+					}
 				}
 			}
 
@@ -171,13 +191,18 @@ int main()
 			}
 
 			// ПРОВЕРКА НА ВЫХОД ЗА ПРЕДЕЛЫ ПОЛЯ
-			if (!check()) for (int i = 0; i < 4; i++) {
-				coordinate[i] = coordinatePrev[i];
+			if (!check())
+			{
+				for (int i = 0; i < 4; i++) {
+					coordinate[i] = coordinatePrev[i];
+				}
 			}
 
 			if (rotate)
 			{
-				Point p = coordinate[1]; // центр вращения
+				bool done = false;
+				bool raz = false;
+				Coordinate p = coordinate[1]; // КУБИК ВОКРУГ КОТОРОГО ВРАЩЕНИЕ
 				for (int i = 0; i < 4; i++)
 				{
 					int x = coordinate[i].y - p.y;
@@ -188,39 +213,64 @@ int main()
 				// ПРОВЕРКА НА ВЫХОД ЗА ПРЕДЕЛЫ ПОЛЯ
 				if (!check()) 
 				{ 
+					done = true;
+					cout << done;
 					for (int i = 0; i < 4; i++) {
-						coordinate[i] = coordinatePrev[i];
-					}
+						if (coordinate[i].x > 5) {
+							coordinate[i].x = coordinatePrev[i].x - 2;
+							raz = true;
+						}
+						else {
+							if (coordinate[i].x < 6) {
+								coordinate[i].x = coordinatePrev[i].x + 2;
+							}				
+						}
+						coordinate[i].y = coordinatePrev[i].y - 2;					
+					}	
 				}
-
+				if (done==true) {
+					for (int i = 0; i < 4; i++)
+					{
+						int x = coordinate[i].y - p.y;
+						int y = coordinate[i].x - p.x-2;
+						if (raz) {
+							coordinate[i].x = p.x - x - 4;
+						}
+						else {
+							coordinate[i].x = p.x - x + 1;
+						}
+						coordinate[i].y = p.y + y;
+					}
+				}		
 			}
-
 			//// ДВИЖЕНИЕ ФИГУРОК ВНИЗ ПО ВРЕМЕНИ
 			if (timer > timeForMove)
 			{
-				for (int i = 0; i < 4; i++) { coordinatePrev[i] = coordinate[i]; coordinate[i].y += 1; }
+				for (int i = 0; i < 4; i++)
+				{
+					coordinatePrev[i] = coordinate[i]; coordinate[i].y += 1;
+				}
 				if (!check())
 				{
-					for (int i = 0; i < 4; i++) pole[coordinatePrev[i].y][coordinatePrev[i].x] = color;
-					color = 1 + rand() % 7;
+					for (int i = 0; i < 4; i++)
+					{
+						pole[coordinatePrev[i].y][coordinatePrev[i].x] = color;
+					}
 					n = rand() % 7;
+					color = n+1;
 					for (int i = 0; i < 4; i++)
 					{
 						coordinate[i].x = tetramino[n][i] % 2 + 4;
 						coordinate[i].y = tetramino[n][i] / 2 + 1;
 					}
-
 				}
 				timer = 0;
-
 			}
-
 			//СЪЕДАНИЕ РЯДОВ
 			int k = HEIGHT;
 
 			for (int i = HEIGHT; i > 0; i--)
 			{
-
 				int count = 0;
 				for (int j = 0; j < WIDTH; j++)
 				{
@@ -238,7 +288,6 @@ int main()
 					k--;
 				}
 			}
-
 			// НАЧАЛО ИГРЫ
 			if (startGame)
 			{
@@ -252,8 +301,6 @@ int main()
 				}
 			}
 			dx = 0; rotate = 0;
-
-
 			
 			window.clear(Color::White);
 
@@ -265,9 +312,7 @@ int main()
 
 					if ((TileMap[i][j] == '0')) cub.setTextureRect(IntRect(144, 0, 18, 18));
 
-
 					cub.setPosition(j * 18, i * 18);
-
 					window.draw(cub);
 				}
 
@@ -275,19 +320,20 @@ int main()
 				for (int i = 0; i < HEIGHT + 1; i++) {
 					for (int j = 0; j < WIDTH; j++)
 					{
-						if (pole[i][j] == 0) continue;
+						if (pole[i][j] == 0)
+						{
+							continue;
+						}
 						cub.setTextureRect(IntRect(pole[i][j] * 18, 0, 18, 18));
 						cub.setPosition(j * 18, i * 18);
 						if (i == 5) {
 							game = false;
-							timercontinue = false;
-							
+							timerContinue = false;					
 							if (Keyboard::isKeyPressed(Keyboard::Enter))
 							{		
 								cout << "new game\n";
 								window.close();
-								system("C:\\Users\\artem\\source\\repos\\kursach_2.0\\x64\\Debug\\kursach_2.0.exe");
-												
+								system("C:\\Users\\artem\\source\\repos\\kursach_2.0\\x64\\Debug\\kursach_2.0.exe");									
 							}
 						}
 						if (game) {
@@ -295,6 +341,15 @@ int main()
 						}
 					}			
 			}
+				//РИСУЕМ ЛИНИЮ СМЕРТИ
+				VertexArray lines(Lines, 2 );
+
+				lines[0].position = Vector2f(18, 108);
+				lines[1].position = Vector2f(180, 108);
+				lines[0].color = Color::Black;
+				lines[1].color = Color::Black;				
+				window.draw(lines);
+	
 			//РИСУЕМ ФИГРУКИ И КРАСИМ ИХ
 			if (game) {
 				for (int i = 0; i < 4; i++)
@@ -303,8 +358,7 @@ int main()
 					cub.setPosition(coordinate[i].x * 18, coordinate[i].y * 18);
 					window.draw(cub);
 				}
-			}
-
+			}			
 			std::ostringstream scoreString, levelString, bestScoreString, gameTime, bestGameTime;   
 
 			//ОТРИСОВКА УРОВНЯ И СКОРОСТЬ ИГРЫ
@@ -391,8 +445,6 @@ int main()
 			}
 			// ОКНО
 			window.display();
-		
 	}
-
 	return 0;
 }
